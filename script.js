@@ -1,10 +1,18 @@
 const btnNumeric = Array.from(document.querySelectorAll('.calculator__btn-numeric'));
-
 const btnOperator = Array.from(document.querySelectorAll('.calculator__btn-operator'));
 
 const btnEqual = document.querySelector('.calculator__btn-equal');
 const btnClear = document.querySelector('.calculator__btn-clear');
-//const input = document.querySelector('.calculator__input');
+const input = document.querySelector('.calculator__input');
+console.log(input.value);
+
+
+/*
+    -Afficher le contenu des boutons sur l'input
+    -Commencer le css
+
+*/
+
 
 
 let firstNumber = '';
@@ -57,7 +65,7 @@ function operate(firstNumber,secondNumber,operator){
             console.log(result);
             break;
         default:
-            console.log('Error');      
+            console.log('Error');
     }
 }
 
@@ -67,7 +75,8 @@ function handleButtonClick(btnList){
     for(let btn of btnList){
         btn.addEventListener('click',(event) => {
             if (btnNumeric.includes(btn)){
-                updateNumber(event.target.innerText);            
+                updateNumber(event.target.innerText);
+                           
             }
             else if(btnOperator.includes(btn) && firstNumber === ''){
                 updateOperator(event.target.innerText);
@@ -76,6 +85,7 @@ function handleButtonClick(btnList){
             else{
                 updateOperator(event.target.innerText);
             }
+            displayInput(event.target.innerText) 
         });
     }
 }
@@ -108,9 +118,11 @@ function clear(){
     result = '';
 }
 
-//Events to trigger the display of the result and the reset of variables
+//function displayInput(character){}
 
-btnEqual.addEventListener('click',()=>{
+// Events to trigger the display of the result and the reset of variables
+
+btnEqual.addEventListener('click',() => {
     firstNumber = parseInt(firstNumber);
     secondNumber = parseInt(secondNumber);
     operate(firstNumber, secondNumber, operator);
