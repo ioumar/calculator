@@ -47,4 +47,4 @@ function divide(firstNumber, secondNumber){
 
 
 
-operate(firstNumber, secondNumber, operator);
+//operate(firstNumber, secondNumber, operator);
