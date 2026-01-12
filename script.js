@@ -1,6 +1,12 @@
-let firstNumber = parseInt(prompt("Enter your first number : "));
-let operator = prompt('Enter your operator : ')
-let secondNumber = parseInt(prompt("Enter your second number"));
+const btnNumeric = Array.from(document.querySelectorAll('.calculator__btn-numeric'));
+
+const btnOperator = Array.from(document.querySelectorAll('.calculator__btn-operator'));
+
+//const btnEqual = document.querySelector('.calculator__btn-equal');
+
+let firstNumber = '';
+let operator = '';
+let secondNumber = '';
 
 
 function operate(firstNumber,secondNumber,operator){
@@ -18,9 +24,11 @@ function operate(firstNumber,secondNumber,operator){
             console.log(divide(firstNumber, secondNumber));
             break;
         default:
-            console.log('Erreur');      
+            console.log('Error');      
     }
 }
+
+// Functions for performing basic mathematical operations
 
 
 function add(firstNumber, secondNumber){
@@ -40,11 +48,50 @@ function multiply(firstNumber, secondNumber){
 
 function divide(firstNumber, secondNumber){
     if(secondNumber === 0){
-        return "Erreur : la division par zéro est impossible";
+        return "Error: division by zero is impossible";
     }
     return firstNumber / secondNumber;
 }
 
+
+
+// The two functions to update the number and operator
+
+
+function handleButtonClick(btnList){
+    for(let btn of btnList){
+        btn.addEventListener('click',(event) => {
+            if (btnNumeric.includes(btn)){
+                updateNumber(event.target.innerText);            
+            }
+            else if(btnOperator.includes(btn)){
+                updateOperator(event.target.innerText);
+            }
+            else{
+                console.log("Error");
+            }
+        });
+    }
+}
+     
+
+function updateNumber(newNumber){
+    if (operator === ''){
+        firstNumber = firstNumber + newNumber;
+    }
+    else{
+        secondNumber = secondNumber + newNumber;
+    }
+}
+
+
+function updateOperator(newOperator){
+    operator = newOperator;
+}
+
+
+handleButtonClick(btnNumeric);
+handleButtonClick(btnOperator);
 
 
 //operate(firstNumber, secondNumber, operator);
