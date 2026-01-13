@@ -4,15 +4,6 @@ const btnOperator = Array.from(document.querySelectorAll('.calculator__btn-opera
 const btnEqual = document.querySelector('.calculator__btn-equal');
 const btnClear = document.querySelector('.calculator__btn-clear');
 const input = document.querySelector('.calculator__input');
-console.log(input.value);
-
-
-/*
-    -Afficher le contenu des boutons sur l'input
-    -Commencer le css
-
-*/
-
 
 
 let firstNumber = '';
@@ -50,19 +41,19 @@ function operate(firstNumber,secondNumber,operator){
     switch(operator){
         case '+':
             result = add(firstNumber, secondNumber);
-            console.log(result);
+            displayInput(result)
             break
         case '-':
             result = subtract(firstNumber, secondNumber);
-            console.log(result);
+            displayInput(result)
             break;
         case '*':
             result = multiply(firstNumber, secondNumber);
-            console.log(result);
+            displayInput(result)
             break;
         case '/':
             result = divide(firstNumber, secondNumber);
-            console.log(result);
+            displayInput(result)
             break;
         default:
             console.log('Error');
@@ -76,7 +67,6 @@ function handleButtonClick(btnList){
         btn.addEventListener('click',(event) => {
             if (btnNumeric.includes(btn)){
                 updateNumber(event.target.innerText);
-                           
             }
             else if(btnOperator.includes(btn) && firstNumber === ''){
                 updateOperator(event.target.innerText);
@@ -85,7 +75,7 @@ function handleButtonClick(btnList){
             else{
                 updateOperator(event.target.innerText);
             }
-            displayInput(event.target.innerText) 
+            displayInput(event.target.innerText)
         });
     }
 }
@@ -116,13 +106,18 @@ function reset(){
 
 function clear(){
     result = '';
+    input.value = '';
 }
 
-//function displayInput(character){}
+
+function displayInput(character){
+    input.value = input.value + character;
+}
 
 // Events to trigger the display of the result and the reset of variables
 
 btnEqual.addEventListener('click',() => {
+    input.value = '';
     firstNumber = parseInt(firstNumber);
     secondNumber = parseInt(secondNumber);
     operate(firstNumber, secondNumber, operator);
