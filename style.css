@@ -1,0 +1,47 @@
+@font-face {
+    font-family:'Inter Medium';
+    src: url(./assets/fonts/inter/Inter_18pt-Medium.ttf);
+}
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: antiquewhite;
+}
+
+.calculator{
+    margin: 5% auto;
+    width: 30%;
+    background-color: hsl(0, 0%, 0%);
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.calculator__screen{
+    border-bottom: 1px solid hsla(0, 0%, 50%, 0.681);
+}
+
+.calculator__input{
+    width: 100%;
+    font-family:'Inter Medium', sans-serif;
+    font-size: 2.5rem;
+    outline: none;
+    text-align: right;
+    border-radius: 2px;
+    border: none;
+    padding: 20px;
+    margin-bottom: 20px;
+    caret-color: hsl(0, 0%, 0%);
+}
+
+
+
+

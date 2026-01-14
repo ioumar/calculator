@@ -30,7 +30,7 @@ function multiply(firstNumber, secondNumber){
 
 function divide(firstNumber, secondNumber){
     if(secondNumber === 0){
-        return "Error: division by zero is impossible";
+        return "impossible";
     }
     return firstNumber / secondNumber;
 }
