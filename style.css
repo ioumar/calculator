@@ -3,7 +3,6 @@
     src: url(./assets/fonts/inter/Inter_18pt-Medium.ttf);
 }
 
-
 *{
     margin: 0;
     padding: 0;
@@ -16,13 +15,15 @@ body{
 
 .calculator{
     margin: 5% auto;
-    width: 30%;
+    width: 23%;
     background-color: hsl(0, 0%, 0%);
-    padding: 15px;
+    padding: 20px;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    box-shadow: 1px 0px 13px 2px hsla(0, 0%, 26%, 0.507);
+    font-family:'Inter Medium', sans-serif;
 }
 
 .calculator__screen{
@@ -31,17 +32,95 @@ body{
 
 .calculator__input{
     width: 100%;
-    font-family:'Inter Medium', sans-serif;
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     outline: none;
     text-align: right;
     border-radius: 2px;
     border: none;
     padding: 20px;
     margin-bottom: 20px;
-    caret-color: hsl(0, 0%, 0%);
+    caret-color: white;;
+    color: hsl(0, 0%, 100%);
+    background-color: hsl(0, 0%, 0%);
 }
 
+.calculator__btn-container{
+    display: grid;
+    gap: 5px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas: "seven eight nine clear"
+                         "four five six subtract"
+                         "one two three multiply"
+                         "add zero divide equal";              
+}
+
+.calculator__btn{
+    font-size: 1.5rem;
+    border-radius: 5px;
+    padding: 15px;
+    border: none;
+    cursor: pointer;
+    background-color: hsla(240, 14%, 37%, 0.415);
+    color: white;
+}
+
+.calculator__btn:active{
+    background-color: hsl(160, 100%, 75%);
+    color: black;
+    transition: 0.2s ease;
+}
+
+.btn0{
+   grid-area: zero;
+}
+.btn1{
+   grid-area: one; 
+}
+.btn2{
+   grid-area: two;
+}
+.btn3{
+   grid-area: three;
+}
+.btn4{
+   grid-area: four;
+}
+.btn5{
+   grid-area: five;
+}
+.btn6{
+   grid-area: six;
+}
+.btn7{
+   grid-area: seven;
+}
+.btn8{
+   grid-area: eight;
+}
+.btn9{
+   grid-area: nine;
+}
+.btnAdd{
+   grid-area: add;
+}
+.btnSubtract{
+   grid-area: subtract;
+}
+.btnMultiply{
+   grid-area: multiply;
+}
+.btnDivide{
+   grid-area: divide;
+}
+
+.calculator__btn-equal{
+    grid-area: equal;
+    background-color: hsl(120, 100%, 25%);
+}
+.calculator__btn-clear{
+    grid-area: clear;
+    background-color: hsl(0, 80%, 53%);
+}
 
 
 
