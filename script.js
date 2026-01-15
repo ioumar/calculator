@@ -14,25 +14,25 @@ let result = '';
 // Functions for performing basic mathematical operations
 
 function add(firstNumber, secondNumber){
-    return firstNumber + secondNumber
+    return parseInt(firstNumber) + parseInt(secondNumber);
 }
 
 
 function subtract(firstNumber, secondNumber){
-    return firstNumber - secondNumber;
+    return parseInt(firstNumber) - parseInt(secondNumber);
 }
 
 
 function multiply(firstNumber, secondNumber){
-    return firstNumber * secondNumber;
+    return parseInt(firstNumber) * parseInt(secondNumber);
 }
 
 
 function divide(firstNumber, secondNumber){
-    if(secondNumber === 0){
+    if(secondNumber === '0'){
         return "impossible";
     }
-    return firstNumber / secondNumber;
+    return (parseInt(firstNumber) / parseInt(secondNumber)).toFixed(2);
 }
 
 // function that must return the result of a mathematical operation
@@ -41,22 +41,26 @@ function operate(firstNumber,secondNumber,operator){
     switch(operator){
         case '+':
             result = add(firstNumber, secondNumber);
-            displayInput(result)
+            reset();
+            updateNumber(String(result));
             break
         case '-':
             result = subtract(firstNumber, secondNumber);
-            displayInput(result)
+            reset();
+            updateNumber(String(result));
             break;
         case '*':
             result = multiply(firstNumber, secondNumber);
-            displayInput(result)
+            reset();
+            updateNumber(String(result));
             break;
         case '/':
             result = divide(firstNumber, secondNumber);
-            displayInput(result)
+            reset();
+            updateNumber(result);
             break;
         default:
-            console.log('Error');
+            break;
     }
 }
 
@@ -65,17 +69,26 @@ function operate(firstNumber,secondNumber,operator){
 function handleButtonClick(btnList){
     for(let btn of btnList){
         btn.addEventListener('click',(event) => {
-            if (btnNumeric.includes(btn)){
+            
+            if (btnNumeric.includes(btn) && firstNumber === String(result)){
+                reset();
+                updateNumber(event.target.innerText);
+            } 
+            
+            else if(btnNumeric.includes(btn)){
                 updateNumber(event.target.innerText);
             }
-            else if(btnOperator.includes(btn) && firstNumber === ''){
+            
+            else if(btnOperator.includes(btn) && firstNumber !== '' && secondNumber !== ''){
+                operate(firstNumber,secondNumber, operator);
                 updateOperator(event.target.innerText);
-                updateNumber(result);
             }
+        
             else{
-                updateOperator(event.target.innerText);
+                updateOperator(event.target.innerText)
             }
-            displayInput(event.target.innerText)
+
+            displayInput()
         });
     }
 }
@@ -107,29 +120,26 @@ function reset(){
 function clear(){
     result = '';
     input.value = '';
+    reset();
 }
 
+// Function to display operations 
 
-function displayInput(character){
-    input.value = input.value + character;
+function displayInput(){
+    input.value = `${firstNumber}${operator}${secondNumber}`;
 }
 
 // Events to trigger the display of the result and the reset of variables
 
 btnEqual.addEventListener('click',() => {
-    input.value = '';
-    firstNumber = parseInt(firstNumber);
-    secondNumber = parseInt(secondNumber);
     operate(firstNumber, secondNumber, operator);
-    reset();
+    displayInput();
+    
 });
 
 btnClear.addEventListener('click',()=>{
     clear();
 })
-
-
-
 
 handleButtonClick(btnNumeric);
 handleButtonClick(btnOperator);
