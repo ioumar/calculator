@@ -3,36 +3,50 @@ const btnOperator = Array.from(document.querySelectorAll('.calculator__btn-opera
 
 const btnEqual = document.querySelector('.calculator__btn-equal');
 const btnClear = document.querySelector('.calculator__btn-clear');
+const btnSign = document.querySelector('.calculator__btn-sign');
+const btnComma = document.querySelector('.calculator__btn-comma')
 const input = document.querySelector('.calculator__input');
-
+const message = 'impossible';
+const zero = '0';
 
 let firstNumber = '';
 let operator = '';
 let secondNumber = '';
 let result = '';
+let sign = '-';
+
 
 // Functions for performing basic mathematical operations
 
 function add(firstNumber, secondNumber){
-    return parseInt(firstNumber) + parseInt(secondNumber);
+    if(secondNumber === ''){
+        return '';
+    }
+    return parseFloat(firstNumber) + parseFloat(secondNumber);
 }
 
 
 function subtract(firstNumber, secondNumber){
-    return parseInt(firstNumber) - parseInt(secondNumber);
+     if(secondNumber === ''){
+        return '';
+    }
+    return parseFloat(firstNumber) - parseFloat(secondNumber);
 }
 
 
 function multiply(firstNumber, secondNumber){
-    return parseInt(firstNumber) * parseInt(secondNumber);
+     if(secondNumber === ''){
+        return '';
+    }
+    return parseFloat(firstNumber) * parseFloat(secondNumber);
 }
 
 
 function divide(firstNumber, secondNumber){
-    if(secondNumber === '0'){
-        return "impossible";
+    if(secondNumber === zero){
+        return message;
     }
-    return (parseInt(firstNumber) / parseInt(secondNumber)).toFixed(2);
+    return (parseFloat(firstNumber) / parseFloat(secondNumber)).toFixed(2);
 }
 
 // function that must return the result of a mathematical operation
@@ -58,6 +72,7 @@ function operate(firstNumber,secondNumber,operator){
             result = divide(firstNumber, secondNumber);
             reset();
             updateNumber(result);
+
             break;
         default:
             break;
@@ -69,21 +84,25 @@ function operate(firstNumber,secondNumber,operator){
 function handleButtonClick(btnList){
     for(let btn of btnList){
         btn.addEventListener('click',(event) => {
-            
-            if (btnNumeric.includes(btn) && firstNumber === String(result)){
-                reset();
+
+            if(btnNumeric.includes(btn) && firstNumber === String(result) && operator === ''){
+                firstNumber ='';
                 updateNumber(event.target.innerText);
-            } 
+            }
             
             else if(btnNumeric.includes(btn)){
                 updateNumber(event.target.innerText);
+            }
+
+            else if(btnOperator.includes(btn) && firstNumber === message){
+                clear();
             }
             
             else if(btnOperator.includes(btn) && firstNumber !== '' && secondNumber !== ''){
                 operate(firstNumber,secondNumber, operator);
                 updateOperator(event.target.innerText);
             }
-        
+            
             else{
                 updateOperator(event.target.innerText)
             }
@@ -97,7 +116,7 @@ function updateNumber(newNumber){
     if (operator === ''){
         firstNumber = firstNumber + newNumber;
     }
-    else if(operator !== '' && firstNumber == ''){
+    else if(operator !== '' && firstNumber === ''){
         firstNumber = String(newNumber);
     }
     else{
@@ -140,6 +159,40 @@ btnEqual.addEventListener('click',() => {
 btnClear.addEventListener('click',()=>{
     clear();
 })
+
+// Events to add the negative sign
+
+btnSign.addEventListener('click',()=>{
+    if(parseFloat(firstNumber) > 0 || firstNumber === ''){
+        firstNumber = sign + firstNumber;
+    }
+    displayInput();
+})
+
+// Add a . button and let users input decimals
+
+btnComma.addEventListener('click',(event) =>{
+
+   if(firstNumber === message){
+     clear();
+   }
+
+   else if(firstNumber === ''){
+     firstNumber = zero + '.';
+   }
+
+   else if(!firstNumber.includes('.')){
+    firstNumber = firstNumber + '.'
+   }
+
+   else if(!secondNumber.includes('.') && operator !== ''){
+    secondNumber = secondNumber + '.';
+   }
+   
+   displayInput();
+})
+
+
 
 handleButtonClick(btnNumeric);
 handleButtonClick(btnOperator);

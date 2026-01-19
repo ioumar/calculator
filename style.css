@@ -48,10 +48,11 @@ body{
     display: grid;
     gap: 5px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-areas: "seven eight nine clear"
-                         "four five six subtract"
-                         "one two three multiply"
-                         "add zero divide equal";              
+    grid-template-areas: "clear multiply divide subtract"
+                         "seven eight nine subtract"
+                         "four five six add"
+                         "one two three add"
+                         "sign zero comma equal";              
 }
 
 .calculator__btn{
@@ -68,6 +69,14 @@ body{
     background-color: hsl(160, 100%, 75%);
     color: black;
     transition: 0.2s ease;
+}
+
+.calculator__btn-sign{
+   grid-area : sign;
+}
+
+.calculator__btn-comma{
+   grid-area:comma;
 }
 
 .btn0{
