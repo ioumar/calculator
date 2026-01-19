@@ -82,9 +82,9 @@ function operate(firstNumber,secondNumber,operator){
 
 // The three functions to update the number and operator
 
-function handleButtonClick(btnList){
+function handleButtonClick(btnList,eventChoice){
     for(let btn of btnList){
-        btn.addEventListener('click',(event) => {
+        btn.addEventListener(eventChoice,(event) => {
 
             if(btnNumeric.includes(btn) && firstNumber === String(result) && operator === ''){
                 firstNumber ='';
@@ -208,12 +208,11 @@ btnBack.addEventListener('click',() =>{
     else{
         clear();
     }
-    
+
     displayInput();
     
 });
 
 
-
-handleButtonClick(btnNumeric);
-handleButtonClick(btnOperator);
+handleButtonClick(btnNumeric,'click');
+handleButtonClick(btnOperator,'click');
