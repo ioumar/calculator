@@ -48,7 +48,7 @@ body{
     display: grid;
     gap: 5px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-areas: "clear multiply divide subtract"
+    grid-template-areas: "clear multiply divide back"
                          "seven eight nine subtract"
                          "four five six add"
                          "one two three add"
@@ -77,6 +77,10 @@ body{
 
 .calculator__btn-comma{
    grid-area:comma;
+}
+
+.calculator__btn-back{
+   grid-area: back;
 }
 
 .btn0{

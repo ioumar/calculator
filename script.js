@@ -5,6 +5,7 @@ const btnEqual = document.querySelector('.calculator__btn-equal');
 const btnClear = document.querySelector('.calculator__btn-clear');
 const btnSign = document.querySelector('.calculator__btn-sign');
 const btnComma = document.querySelector('.calculator__btn-comma')
+const btnBack = document.querySelector('.calculator__btn-back')
 const input = document.querySelector('.calculator__input');
 const message = 'impossible';
 const zero = '0';
@@ -191,6 +192,26 @@ btnComma.addEventListener('click',(event) =>{
    
    displayInput();
 })
+
+btnBack.addEventListener('click',() =>{
+    let inputText = input.value;
+    // Deletes the last character entered
+    if(secondNumber.includes(inputText[inputText.length-1])){
+        secondNumber = secondNumber.replace(inputText[inputText.length-1],'');
+    }
+    else if(operator.includes(inputText[inputText.length-1])){
+        operator = '';
+    }
+    else if(firstNumber.includes(inputText[inputText.length-1])){
+      firstNumber = firstNumber.replace(inputText[inputText.length-1],'');
+    }
+    else{
+        clear();
+    }
+    
+    displayInput();
+    
+});
 
 
 
