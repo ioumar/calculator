@@ -1,6 +1,6 @@
 const btnNumeric = Array.from(document.querySelectorAll('.calculator__btn-numeric'));
 const btnOperator = Array.from(document.querySelectorAll('.calculator__btn-operator'));
-
+const calculator = document.querySelector('.calculator');
 const btnEqual = document.querySelector('.calculator__btn-equal');
 const btnClear = document.querySelector('.calculator__btn-clear');
 const btnSign = document.querySelector('.calculator__btn-sign');
@@ -9,6 +9,8 @@ const btnBack = document.querySelector('.calculator__btn-back')
 const input = document.querySelector('.calculator__input');
 const message = 'impossible';
 const zero = '0';
+const numeric = '0123456789';
+const operators = '-+/*';
 
 let firstNumber = '';
 let operator = '';
@@ -82,31 +84,23 @@ function operate(firstNumber,secondNumber,operator){
 
 // The three functions to update the number and operator
 
-function handleButtonClick(btnList,eventChoice){
+function handleButtonClick(btnList){
     for(let btn of btnList){
-        btn.addEventListener(eventChoice,(event) => {
-
-            if(btnNumeric.includes(btn) && firstNumber === String(result) && operator === ''){
-                firstNumber ='';
-                updateNumber(event.target.innerText);
-            }
-            
-            else if(btnNumeric.includes(btn)){
-                updateNumber(event.target.innerText);
+        btn.addEventListener('click',(event) => {
+            if(numeric.includes(event.target.innerText)){
+                handleCalculatorLogic(numeric,event.target.innerText);
             }
 
-            else if(btnOperator.includes(btn) && firstNumber === message){
-                clear();
+            else if(operators.includes(event.target.innerText)){
+                 handleCalculatorLogic(operators,event.target.innerText);
             }
-            
-            else if(btnOperator.includes(btn) && firstNumber !== '' && secondNumber !== ''){
-                operate(firstNumber,secondNumber, operator);
-                updateOperator(event.target.innerText);
-            }
-            
+
             else{
-                updateOperator(event.target.innerText)
+                handleKeyAndClickPress(event.target.innerText);
             }
+
+            //remove focus from the button
+            event.target.blur();
 
             displayInput()
         });
@@ -149,31 +143,24 @@ function displayInput(){
     input.value = `${firstNumber}${operator}${secondNumber}`;
 }
 
-// Events to trigger the display of the result and the reset of variables
 
-btnEqual.addEventListener('click',() => {
+// functions important
+
+function equal(){
     operate(firstNumber, secondNumber, operator);
     displayInput();
-    
-});
+}
 
-btnClear.addEventListener('click',()=>{
-    clear();
-})
 
-// Events to add the negative sign
-
-btnSign.addEventListener('click',()=>{
+function addSign(){
     if(parseFloat(firstNumber) > 0 || firstNumber === ''){
         firstNumber = sign + firstNumber;
     }
     displayInput();
-})
+}
 
-// Add a . button and let users input decimals
 
-btnComma.addEventListener('click',(event) =>{
-
+function addComma(){
    if(firstNumber === message){
      clear();
    }
@@ -191,9 +178,9 @@ btnComma.addEventListener('click',(event) =>{
    }
    
    displayInput();
-})
+}
 
-btnBack.addEventListener('click',() =>{
+function deleteCharacter(){
     let inputText = input.value;
     // Deletes the last character entered
     if(secondNumber.includes(inputText[inputText.length-1])){
@@ -210,9 +197,115 @@ btnBack.addEventListener('click',() =>{
     }
 
     displayInput();
+}
+// Events to trigger the display of the result and the reset of variables
+
+btnEqual.addEventListener('click',(event) => {
+    equal(); 
+    //remove focus from the button
+    event.target.blur();
     
 });
 
+btnClear.addEventListener('click',(event)=>{
+    clear();
+    event.target.blur();
+})
 
-handleButtonClick(btnNumeric,'click');
-handleButtonClick(btnOperator,'click');
+// Events to add the negative sign
+
+btnSign.addEventListener('click',(event)=>{
+    addSign();
+    event.target.blur();
+})
+
+// Add a . button and let users input decimals
+
+btnComma.addEventListener('click',(event) =>{
+    addComma();
+    event.target.blur();
+})
+
+btnBack.addEventListener('click',(event) =>{
+    deleteCharacter();
+    event.target.blur();
+});
+
+// A Keyboard support
+
+function handleKeyAndClickPress(event){
+    switch(event){
+        
+        case 'Enter':
+            equal();
+            break;
+        
+        case '.':
+            addComma();
+            break;
+        
+        case 'Backspace':
+            deleteCharacter();
+            break;
+        
+        case 'Delete':
+            clear();
+            break;
+
+        default:
+           break;
+            
+    }
+};
+
+
+function handleCalculatorLogic(characterList, character){
+    if(characterList.includes(character) && firstNumber === String(result) && operator === '' && isNumber(character)){
+        firstNumber ='';
+        updateNumber(character);
+    }
+
+    else if(characterList.includes(character) && isNumber(character)){
+        updateNumber(character);
+    }
+
+     else if(characterList.includes(character) && firstNumber === message){
+        clear();
+    }
+
+    else if(characterList.includes(character) && firstNumber !== '' && secondNumber !== ''){
+        operate(firstNumber,secondNumber, operator);
+        updateOperator(character);
+    }
+
+    else if(characterList.includes(character)){
+        updateOperator(character);
+    }
+
+    displayInput()
+}
+
+
+function isNumber(value){
+    if(Number.isNaN(Number(value))){
+        return false;
+    }
+    return true;
+    
+}
+
+
+window.addEventListener('keydown',(event)=>{
+    if(numeric.includes(event.key)){
+        handleCalculatorLogic(numeric, event.key);
+    }
+    else if(operators.includes(event.key)){
+        handleCalculatorLogic(operators, event.key);
+    }
+    else{
+        handleKeyAndClickPress(event.key); 
+    }
+});
+
+handleButtonClick(btnNumeric);
+handleButtonClick(btnOperator);
