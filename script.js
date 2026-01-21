@@ -1,5 +1,6 @@
 const btnNumeric = Array.from(document.querySelectorAll('.calculator__btn-numeric'));
 const btnOperator = Array.from(document.querySelectorAll('.calculator__btn-operator'));
+
 const calculator = document.querySelector('.calculator');
 const btnEqual = document.querySelector('.calculator__btn-equal');
 const btnClear = document.querySelector('.calculator__btn-clear');
@@ -219,7 +220,7 @@ btnSign.addEventListener('click',(event)=>{
     event.target.blur();
 })
 
-// Add a . button and let users input decimals
+// Add a comma button and let users input decimals
 
 btnComma.addEventListener('click',(event) =>{
     addComma();
