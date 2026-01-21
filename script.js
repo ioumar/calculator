@@ -184,14 +184,14 @@ function addComma(){
 function deleteCharacter(){
     let inputText = input.value;
     // Deletes the last character entered
-    if(secondNumber.includes(inputText[inputText.length-1])){
-        secondNumber = secondNumber.replace(inputText[inputText.length-1],'');
+    if(secondNumber !==''){
+        secondNumber = secondNumber.slice(0,-1);
     }
-    else if(operator.includes(inputText[inputText.length-1])){
+    else if(operator !==''){
         operator = '';
     }
-    else if(firstNumber.includes(inputText[inputText.length-1])){
-      firstNumber = firstNumber.replace(inputText[inputText.length-1],'');
+    else if(firstNumber !==''){
+      firstNumber = firstNumber.slice(0,-1);
     }
     else{
         clear();
